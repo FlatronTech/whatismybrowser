@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is your browser?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>What Is Your Browser?</h1>
+        <p class="subtitle">🔍</p>
+    </header>
+
+    <div class="grid">
+        <!-- 🌐 Browser -->
+        <div class="card">
+            <div class="card-title">🌐 Browser</div>
+            <div class="info-row">
+                <span class="label">🦊 Name:</span>
+                <span class="value" id="browserName">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🔢 Version:</span>
+                <span class="value" id="browserVersion">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🚀 Status:</span>
+                <span class="value" id="browserStatus">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🍪 Cookies:</span>
+                <span class="value" id="cookiesStatus">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🧩 Engine:</span>
+                <span class="value" id="engine">🔄 Loading...</span>
+            </div>
+        </div>
+
+        <!-- 💻 Operating System -->
+        <div class="card">
+            <div class="card-title">💻 Operating System</div>
+            <div class="info-row">
+                <span class="label">🖥️ Platform:</span>
+                <span class="value" id="osName">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">📱 Device Type:</span>
+                <span class="value" id="deviceType">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🌍 Language:</span>
+                <span class="value" id="language">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🕒 Timezone:</span>
+                <span class="value" id="timezone">🔄 Loading...</span>
+            </div>
+        </div>
+
+        <!-- 🧠 Hardware -->
+        <div class="card">
+            <div class="card-title">🧠 Hardware & Components</div>
+            <div class="info-row">
+                <span class="label">⚙️ CPU Cores:</span>
+                <span class="value" id="cpuCores">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🐏 RAM:</span>
+                <span class="value" id="ram">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🎮 GPU:</span>
+                <span class="value" id="gpu">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">👆 Touchscreen:</span>
+                <span class="value" id="touch">🔄 Loading...</span>
+            </div>
+        </div>
+
+        <!-- 🖥️ Display -->
+        <div class="card">
+            <div class="card-title">🖥️ Display & Screen</div>
+            <div class="info-row">
+                <span class="label">📐 Resolution:</span>
+                <span class="value" id="resolution">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">📏 Window Size:</span>
+                <span class="value" id="windowSize">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🔍 Pixel Ratio:</span>
+                <span class="value" id="pixelRatio">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🎨 Color Depth:</span>
+                <span class="value" id="colorDepth">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🌙 Dark Mode:</span>
+                <span class="value" id="darkMode">🔄 Loading...</span>
+            </div>
+        </div>
+
+        <!-- 📶 Network -->
+        <div class="card">
+            <div class="card-title">📶 Network & Connection</div>
+            <div class="info-row">
+                <span class="label">🟢 Online Status:</span>
+                <span class="value" id="onlineStatus">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">📡 Connection Type:</span>
+                <span class="value" id="connectionType">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">⚡ Downlink Speed:</span>
+                <span class="value" id="downlink">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🐌 RTT (Latency):</span>
+                <span class="value" id="rtt">🔄 Loading...</span>
+            </div>
+        </div>
+
+        <!-- 🔐 Security & APIs -->
+        <div class="card">
+            <div class="card-title">🔐 Security & APIs</div>
+            <div class="info-row">
+                <span class="label">🔒 HTTPS:</span>
+                <span class="value" id="https">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🧭 Do Not Track:</span>
+                <span class="value" id="dnt">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">📋 Clipboard API:</span>
+                <span class="value" id="clipboard">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">📍 Geolocation:</span>
+                <span class="value" id="geolocation">🔄 Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="label">🔋 Battery API:</span>
+                <span class="value" id="battery">🔄 Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p> Copyright Flatron Tech 2026. (Page Version 1.0.27.2026)</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
