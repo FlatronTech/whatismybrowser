@@ -1,61 +1,75 @@
-document.addEventListener('DOMContentLoaded', () => {
-    detectBrowser();
-    detectOS();
-    detectHardware();
-    detectDisplay();
-    detectNetwork();
-    detectSecurity();
-});
+// Should work with IE 6-11 ¯\_(ツ)_/¯
 
+// Cross-browser event listener
+function addEvent(el, type, fn) {
+    if (el.addEventListener) {
+        el.addEventListener(type, fn, false);
+    } else if (el.attachEvent) {
+        el.attachEvent('on' + type, fn);
+    }
+}
+
+// Cross-browser text setter
 function setText(id, text, className) {
-    const el = document.getElementById(id);
+    var el = document.getElementById(id);
     if (el) {
-        el.textContent = text;
-        if (className) {
-            el.className = `value ${className}`;
+        if (typeof el.textContent !== 'undefined') {
+            el.textContent = text;
+        } else {
+            el.innerText = text;
         }
-    } else {
-        console.warn(`Element with ID "${id}" not found in HTML.`);
+        if (className) {
+            el.className = 'value ' + className;
+        }
     }
 }
 
 function setHTML(id, html, className) {
-    const el = document.getElementById(id);
+    var el = document.getElementById(id);
     if (el) {
         el.innerHTML = html;
         if (className) {
-            el.className = `value ${className}`;
+            el.className = 'value ' + className;
         }
-    } else {
-        console.warn(`Element with ID "${id}" not found in HTML.`);
     }
 }
 
+// 1. Browser Detection
 function detectBrowser() {
-    const ua = navigator.userAgent;
-    let name = 'Unknown';
-    let version = 'Unknown';
-    let engine = 'Unknown';
+    var ua = navigator.userAgent;
+    var name = 'Unknown';
+    var version = 'Unknown';
+    var engine = 'Unknown';
 
-    if (ua.includes('Firefox')) {
+    if (ua.indexOf('MSIE') !== -1 || ua.indexOf('Trident') !== -1) {
+        name = 'Internet Explorer';
+        var match = ua.match(/(?:MSIE |rv:)(\d+(\.\d+)?)/);
+        version = match ? match[1] : 'Unknown';
+        engine = 'Trident';
+    } else if (ua.indexOf('Firefox') !== -1) {
         name = 'Firefox';
-        version = ua.match(/Firefox\/([0-9.]+)/)?.[1] || 'Unknown';
+        var match = ua.match(/Firefox\/([0-9.]+)/);
+        version = match ? match[1] : 'Unknown';
         engine = 'Gecko';
-    } else if (ua.includes('Edg')) {
+    } else if (ua.indexOf('Edg') !== -1) {
         name = 'Edge';
-        version = ua.match(/Edg\/([0-9.]+)/)?.[1] || 'Unknown';
+        var match = ua.match(/Edg\/([0-9.]+)/);
+        version = match ? match[1] : 'Unknown';
         engine = 'Blink';
-    } else if (ua.includes('Chrome')) {
+    } else if (ua.indexOf('Chrome') !== -1) {
         name = 'Chrome';
-        version = ua.match(/Chrome\/([0-9.]+)/)?.[1] || 'Unknown';
+        var match = ua.match(/Chrome\/([0-9.]+)/);
+        version = match ? match[1] : 'Unknown';
         engine = 'Blink';
-    } else if (ua.includes('Safari')) {
+    } else if (ua.indexOf('Safari') !== -1) {
         name = 'Safari';
-        version = ua.match(/Version\/([0-9.]+)/)?.[1] || 'Unknown';
+        var match = ua.match(/Version\/([0-9.]+)/);
+        version = match ? match[1] : 'Unknown';
         engine = 'WebKit';
-    } else if (ua.includes('Opera') || ua.includes('OPR')) {
+    } else if (ua.indexOf('Opera') !== -1 || ua.indexOf('OPR') !== -1) {
         name = 'Opera';
-        version = ua.match(/(?:Opera|OPR)\/([0-9.]+)/)?.[1] || 'Unknown';
+        var match = ua.match(/(?:Opera|OPR)\/([0-9.]+)/);
+        version = match ? match[1] : 'Unknown';
         engine = 'Blink';
     }
 
@@ -63,16 +77,15 @@ function detectBrowser() {
     setText('browserVersion', version);
     setText('browserEngine', engine);
 
-    const vNum = parseFloat(version);
-    const thresholds = { Chrome: 120, Edge: 120, Firefox: 120, Safari: 17, Opera: 105 };
-    let isCurrent = false;
+    var vNum = parseFloat(version);
+    var isCurrent = false;
     
-    for (const [browser, minVer] of Object.entries(thresholds)) {
-        if (name.includes(browser) && vNum >= minVer) {
-            isCurrent = true;
-            break;
-        }
-    }
+    if (name === 'Chrome' && vNum >= 120) isCurrent = true;
+    else if (name === 'Edge' && vNum >= 120) isCurrent = true;
+    else if (name === 'Firefox' && vNum >= 120) isCurrent = true;
+    else if (name === 'Safari' && vNum >= 17) isCurrent = true;
+    else if (name === 'Opera' && vNum >= 105) isCurrent = true;
+    else if (name === 'Internet Explorer') isCurrent = false; // IE is not a new browser so its not up to date ¯\_(ツ)_/¯
 
     if (isNaN(vNum)) {
         setHTML('browserStatus', 'Unknown', 'status-warn');
@@ -83,37 +96,46 @@ function detectBrowser() {
     setText('cookies', navigator.cookieEnabled ? 'Enabled' : 'Disabled');
 }
 
+// 2. OS Detection
 function detectOS() {
-    const ua = navigator.userAgent;
-    let os = 'Unknown';
+    var ua = navigator.userAgent;
+    var os = 'Unknown';
 
-    if (ua.includes('Win')) os = 'Windows';
-    else if (ua.includes('Mac')) os = 'macOS';
-    else if (ua.includes('Linux')) os = 'Linux';
-    else if (ua.includes('Android')) os = 'Android';
-    else if (ua.includes('like Mac')) os = 'iOS';
+    if (ua.indexOf('Win') !== -1) os = 'Windows';
+    else if (ua.indexOf('Mac') !== -1) os = 'macOS';
+    else if (ua.indexOf('Linux') !== -1) os = 'Linux';
+    else if (ua.indexOf('Android') !== -1) os = 'Android';
+    else if (ua.indexOf('like Mac') !== -1) os = 'iOS';
 
     setText('osName', os);
 
-    let device = 'Desktop';
+    var device = 'Desktop';
     if (/Mobi|Android/i.test(ua)) device = 'Mobile';
     else if (/Tablet|iPad/i.test(ua)) device = 'Tablet';
     setText('deviceType', device);
 
-    setText('language', navigator.language || 'Unknown');
-    setText('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown');
+    setText('language', navigator.userLanguage || navigator.language || 'Unknown');
+    
+    var tz = 'Unknown';
+    try {
+        if (window.Intl && Intl.DateTimeFormat) {
+            tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown';
+        }
+    } catch(e) {}
+    setText('timezone', tz);
 }
 
+// 3. Hardware
 function detectHardware() {
-    setText('cpuCores', navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} cores\threads` : 'Unknown');
-    setText('ram', navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : 'Not supported');
+    setText('cpuCores', navigator.hardwareConcurrency ? navigator.hardwareConcurrency + ' cores' : 'Unknown');
+    setText('ram', navigator.deviceMemory ? '~' + navigator.deviceMemory + ' GB' : 'Not supported');
 
-    let gpuName = 'Not detected';
+    var gpuName = 'Not detected';
     try {
-        const canvas = document.createElement('canvas');
-        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        var canvas = document.createElement('canvas');
+        var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
         if (gl) {
-            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+            var debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
             if (debugInfo) {
                 gpuName = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
             }
@@ -123,37 +145,43 @@ function detectHardware() {
     }
     setText('gpu', gpuName);
 
-    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     setText('touch', isTouch ? 'Yes' : 'No');
 }
 
+// 4. Display
 function detectDisplay() {
-    setText('resolution', `${screen.width} x ${screen.height}`);
-    setText('windowSize', `${window.innerWidth} x ${window.innerHeight}`);
-    setText('pixelRatio', `${window.devicePixelRatio}x`);
-    setText('colorDepth', `${screen.colorDepth}-bit`);
+    setText('resolution', screen.width + ' x ' + screen.height);
+    setText('windowSize', document.documentElement.clientWidth + ' x ' + document.documentElement.clientHeight);
+    setText('pixelRatio', (window.devicePixelRatio || 1) + 'x');
+    setText('colorDepth', screen.colorDepth + '-bit');
 
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setText('theme', prefersDark ? 'Dark' : 'Light');
+    var theme = 'Light';
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'Dark';
+    }
+    setText('theme', theme);
 
-    window.addEventListener('resize', () => {
-        setText('windowSize', `${window.innerWidth} x ${window.innerHeight}`);
+    addEvent(window, 'resize', function() {
+        setText('windowSize', document.documentElement.clientWidth + ' x ' + document.documentElement.clientHeight);
     });
 }
 
+// 5. Network
 function detectNetwork() {
-    const updateOnline = () => {
-        setHTML('onlineStatus', navigator.onLine ? 'Online' : 'Offline', navigator.onLine ? 'status-good' : 'status-bad');
+    var updateOnline = function() {
+        var isOnline = navigator.onLine;
+        setHTML('onlineStatus', isOnline ? 'Online' : 'Offline', isOnline ? 'status-good' : 'status-bad');
     };
     updateOnline();
-    window.addEventListener('online', updateOnline);
-    window.addEventListener('offline', updateOnline);
+    addEvent(window, 'online', updateOnline);
+    addEvent(window, 'offline', updateOnline);
 
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (conn) {
         setText('connectionType', conn.effectiveType ? conn.effectiveType.toUpperCase() : 'Unknown');
-        setText('downlink', conn.downlink ? `${conn.downlink} Mbps` : 'N/A');
-        setText('rtt', conn.rtt !== undefined ? `${conn.rtt} ms` : 'N/A');
+        setText('downlink', conn.downlink ? conn.downlink + ' Mbps' : 'N/A');
+        setText('rtt', (typeof conn.rtt !== 'undefined') ? conn.rtt + ' ms' : 'N/A');
     } else {
         setText('connectionType', 'API unavailable');
         setText('downlink', 'API unavailable');
@@ -161,25 +189,39 @@ function detectNetwork() {
     }
 }
 
+// 6. Security & APIs
 function detectSecurity() {
-    setHTML('protocol', location.protocol === 'https:' ? 'HTTPS (Secure)' : 'HTTP (Insecure)', location.protocol === 'https:' ? 'status-good' : 'status-warn');
+    var isHttps = location.protocol === 'https:';
+    setHTML('protocol', isHttps ? 'HTTPS (Secure)' : 'HTTP (Insecure)', isHttps ? 'status-good' : 'status-warn');
 
-    const dnt = navigator.doNotTrack;
-    let dntText = 'Not set';
-    if (dnt === '1') dntText = 'Enabled';
+    var dnt = navigator.doNotTrack || navigator.msDoNotTrack;
+    var dntText = 'Not set';
+    if (dnt === '1' || dnt === 'yes') dntText = 'Enabled';
     else if (dnt === '0') dntText = 'Disabled';
     setText('dnt', dntText);
 
-    setText('clipboard', navigator.clipboard ? 'Supported' : 'Not supported');
+    setText('clipboard', window.ClipboardEvent ? 'Supported' : 'Not supported');
     setText('geolocation', navigator.geolocation ? 'Supported' : 'Not supported');
 
-    if (navigator.getBattery) {
-        navigator.getBattery().then(battery => {
-            const pct = Math.round(battery.level * 100);
-            const state = battery.charging ? ' (Charging)' : '';
-            setText('battery', `${pct}%${state}`);
-        }).catch(() => setText('battery', 'Error'));
+    // Battery API requires Promises (Not natively in IE11)
+    if (navigator.getBattery && window.Promise) {
+        navigator.getBattery().then(function(battery) {
+            var pct = Math.round(battery.level * 100);
+            var state = battery.charging ? ' (Charging)' : '';
+            setText('battery', pct + '%' + state);
+        }).catch(function() {
+            setText('battery', 'Error');
+        });
     } else {
         setText('battery', 'Not supported');
     }
 }
+// Initialize the script
+addEvent(window, 'load', function() {
+    detectBrowser();
+    detectOS();
+    detectHardware();
+    detectDisplay();
+    detectNetwork();
+    detectSecurity();
+});
