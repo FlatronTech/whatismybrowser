@@ -11,7 +11,11 @@ function setText(id, text, className) {
     const el = document.getElementById(id);
     if (el) {
         el.textContent = text;
-        if (className) el.className = `value ${className}`;
+        if (className) {
+            el.className = `value ${className}`;
+        }
+    } else {
+        console.warn(`Element with ID "${id}" not found in HTML.`);
     }
 }
 
@@ -19,7 +23,11 @@ function setHTML(id, html, className) {
     const el = document.getElementById(id);
     if (el) {
         el.innerHTML = html;
-        if (className) el.className = `value ${className}`;
+        if (className) {
+            el.className = `value ${className}`;
+        }
+    } else {
+        console.warn(`Element with ID "${id}" not found in HTML.`);
     }
 }
 
@@ -69,7 +77,7 @@ function detectBrowser() {
     if (isNaN(vNum)) {
         setHTML('browserStatus', 'Unknown', 'status-warn');
     } else {
-        setHTML('browserStatus', isCurrent ? 'Up to date' : 'Update available', isCurrent ? 'status-good' : 'status-warn');
+        setHTML('browserStatus', isCurrent ? 'Up to date' : 'Not up to date', isCurrent ? 'status-good' : 'status-warn');
     }
 
     setText('cookies', navigator.cookieEnabled ? 'Enabled' : 'Disabled');
@@ -97,7 +105,7 @@ function detectOS() {
 }
 
 function detectHardware() {
-    setText('cpuCores', navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} cores` : 'Unknown');
+    setText('cpuCores', navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} cores\threads` : 'Unknown');
     setText('ram', navigator.deviceMemory ? `~${navigator.deviceMemory} GB` : 'Not supported');
 
     let gpuName = 'Not detected';
@@ -110,7 +118,9 @@ function detectHardware() {
                 gpuName = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
             }
         }
-    } catch (e) {}
+    } catch (e) {
+        gpuName = 'Access denied';
+    }
     setText('gpu', gpuName);
 
     const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
