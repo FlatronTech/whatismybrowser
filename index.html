@@ -2,73 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What is my browser?</title>
+    <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>What Is Your Browser?</h1>
-            <p class="subtitle">Simple site for checking that.</p>
+            <p class="subtitle">Simple site for checking that. ¯\_(ツ)_/¯</p>
         </header>
 
-        <main class="grid">
-            <section class="card">
+        <div class="grid">
+            <div class="card">
                 <h2>Browser</h2>
                 <div class="row"><span class="label">Name</span><span class="value" id="browserName">-</span></div>
                 <div class="row"><span class="label">Version</span><span class="value" id="browserVersion">-</span></div>
                 <div class="row"><span class="label">Engine</span><span class="value" id="browserEngine">-</span></div>
                 <div class="row"><span class="label">Status</span><span class="value" id="browserStatus">-</span></div>
                 <div class="row"><span class="label">Cookies</span><span class="value" id="cookies">-</span></div>
-            </section>
+            </div>
 
-            <section class="card">
+            <div class="card">
                 <h2>Operating System</h2>
                 <div class="row"><span class="label">Platform</span><span class="value" id="osName">-</span></div>
                 <div class="row"><span class="label">Version</span><span class="value" id="osVersion">-</span></div>
                 <div class="row"><span class="label">Device Type</span><span class="value" id="deviceType">-</span></div>
                 <div class="row"><span class="label">Language</span><span class="value" id="language">-</span></div>
                 <div class="row"><span class="label">Timezone</span><span class="value" id="timezone">-</span></div>
-            </section>
+            </div>
 
-            <section class="card">
+            <div class="card">
                 <h2>Hardware</h2>
-                <div class="row"><span class="label">CPU Cores (or threads)</span><span class="value" id="cpuCores">-</span></div>
+                <div class="row"><span class="label">CPU Cores</span><span class="value" id="cpuCores">-</span></div>
                 <div class="row"><span class="label">RAM</span><span class="value" id="ram">-</span></div>
                 <div class="row"><span class="label">GPU</span><span class="value" id="gpu">-</span></div>
                 <div class="row"><span class="label">Touch Support</span><span class="value" id="touch">-</span></div>
-            </section>
+            </div>
 
-            <section class="card">
+            <div class="card">
                 <h2>Display</h2>
                 <div class="row"><span class="label">Resolution</span><span class="value" id="resolution">-</span></div>
                 <div class="row"><span class="label">Window Size</span><span class="value" id="windowSize">-</span></div>
                 <div class="row"><span class="label">Pixel Ratio</span><span class="value" id="pixelRatio">-</span></div>
                 <div class="row"><span class="label">Color Depth</span><span class="value" id="colorDepth">-</span></div>
                 <div class="row"><span class="label">Theme Preference</span><span class="value" id="theme">-</span></div>
-            </section>
+            </div>
 
-            <section class="card">
+            <div class="card">
                 <h2>Network</h2>
                 <div class="row"><span class="label">Status</span><span class="value" id="onlineStatus">-</span></div>
                 <div class="row"><span class="label">Connection</span><span class="value" id="connectionType">-</span></div>
                 <div class="row"><span class="label">Downlink</span><span class="value" id="downlink">-</span></div>
                 <div class="row"><span class="label">Latency (RTT)</span><span class="value" id="rtt">-</span></div>
-            </section>
+            </div>
 
-            <section class="card">
+            <div class="card">
                 <h2>Security & APIs</h2>
                 <div class="row"><span class="label">Protocol</span><span class="value" id="protocol">-</span></div>
                 <div class="row"><span class="label">Do Not Track</span><span class="value" id="dnt">-</span></div>
                 <div class="row"><span class="label">Clipboard API</span><span class="value" id="clipboard">-</span></div>
                 <div class="row"><span class="label">Geolocation</span><span class="value" id="geolocation">-</span></div>
                 <div class="row"><span class="label">Battery</span><span class="value" id="battery">-</span></div>
-            </section>
-        </main>
+            </div>
+        </div>
 
         <footer>
-            <p>Copyright Flatron Tech 2026 (Page Version 2.0.30.2026)</p>
+            <p>Copyright Flatron Tech 2026 (Page Version 3.0.25.2026)</p>
         </footer>
     </div>
 
