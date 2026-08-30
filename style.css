@@ -1,27 +1,11 @@
-:root {
-    --bg: #f5f5f7;
-    --card-bg: #ffffff;
-    --text: #1d1d1f;
-    --text-secondary: #6e6e73;
-    --border: #d2d2d7;
-    --accent: #0071e3;
-    --success: #2e7d32;
-    --warning: #ed6c02;
-    --error: #c62828;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+/* Simpler CSS so it should work with IE 6-11! */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
     line-height: 1.5;
-    padding: 24px;
+    padding: 20px;
+    margin: 0;
 }
 
 .container {
@@ -30,77 +14,84 @@ body {
 }
 
 header {
-    margin-bottom: 32px;
+    margin-bottom: 30px;
 }
 
 h1 {
     font-size: 28px;
-    font-weight: 600;
+    font-weight: bold;
     margin-bottom: 4px;
 }
 
 .subtitle {
-    color: var(--text-secondary);
+    color: #6e6e73;
     font-size: 15px;
 }
 
+/* Grid using Floats (No CSS Grid exists for IE!) */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
+    overflow: hidden; /* Clearfix */
+    margin: 0 -10px;
 }
 
 .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #d2d2d7;
     padding: 20px;
+    margin-bottom: 20px;
+    float: left;
+    width: 46%;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 .card h2 {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: bold;
     margin-bottom: 16px;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid #d2d2d7;
 }
 
+/* 📝 Rows using Floats (No Flexbox exists in IE!) */
 .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    overflow: hidden;
     padding: 8px 0;
-    font-size: 14px;
-}
-
-.row:not(:last-child) {
     border-bottom: 1px solid #f0f0f0;
+    zoom: 1; /* IE6/7 hasLayout trigger */
 }
 
 .label {
-    color: var(--text-secondary);
+    float: left;
+    color: #6e6e73;
 }
 
 .value {
-    font-weight: 500;
+    float: right;
+    font-weight: bold;
     text-align: right;
     max-width: 60%;
-    word-break: break-word;
+    word-wrap: break-word;
 }
 
-.status-good { color: var(--success); }
-.status-warn { color: var(--warning); }
-.status-bad { color: var(--error); }
+.status-good { color: #2e7d32; }
+.status-warn { color: #ed6c02; }
+.status-bad { color: #c62828; }
 
 footer {
     margin-top: 40px;
     text-align: center;
-    color: var(--text-secondary);
+    color: #6e6e73;
     font-size: 13px;
+    clear: both;
 }
 
-@media (max-width: 600px) {
-    body { padding: 16px; }
-    .grid { grid-template-columns: 1fr; }
-    h1 { font-size: 24px; }
+/* Simple responsive fallback (Media queries ignored in IE8 :/) */
+@media screen and (max-width: 768px) {
+    .card {
+        float: none;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
